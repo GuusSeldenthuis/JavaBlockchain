@@ -10,7 +10,7 @@ public class Main
     public static void main(String[] args)
     {
         // Creating the first block without a previous block-hash.
-        Block genesisBlock = new Block(5, "0", "Hello world!".toCharArray());
+        Block genesisBlock = new Block("0", "Hello world!".toCharArray());
         blockchain.add(genesisBlock);
 
         String prevBlockHash = genesisBlock.getHash();
@@ -21,8 +21,8 @@ public class Main
         while (blockchain.size() < 10)
         {
             System.out.println("======");
-            Block block = new Block(5, prevBlockHash, Utils.randomString(random.nextInt(500) + 100));
-            System.out.println(String.format("DATA: %s", block.toDataBlock()));
+            Block block = new Block(prevBlockHash, Utils.randomString(random.nextInt(500) + 100));
+            System.out.println(String.format("raw block-data: %s", block.toDataBlock()));
             blockchain.add(block);
 
             prevBlockHash = block.getHash();

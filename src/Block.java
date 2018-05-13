@@ -7,8 +7,6 @@ import java.util.Objects;
  */
 public class Block
 {
-    // The block's mining-difficulty.
-    private int difficulty;
 
     // The block's hash.
     private String hash;
@@ -28,22 +26,19 @@ public class Block
     /**
      * The default constructor for creating a basic block.
      *
-     * @param difficulty   The block's mining-difficulty.
      * @param previousHash The previous block's hash.
      * @param data         The block's data.
      */
     public Block(
-            int difficulty,
             String previousHash,
             char[] data)
     {
-        this.difficulty = difficulty;
         this.previousHash = previousHash;
         this.data = data;
         this.timeStamp = new Date().getTime();
 
         // Calculating the hash should be the last part of the block's creation.
-        this.hash = this.mineValidBlockHash();
+        this.hash = this.generateValidBlockHash();
     }
 
     /**
@@ -102,32 +97,19 @@ public class Block
     }
 
     /**
-     * Magic mining method for generating the block's valid hash.
+     * Generate a block-hash starting with at least two zero.
      *
-     * @return A hash that's valid for the block.
+     * @return A hash that's valid for the new block.
      */
-    public String mineValidBlockHash()
+    public String generateValidBlockHash()
     {
-        // Generate the hash's first required chars. (Diff 5 is for example 00000).
-        String targetHash = new String(new char[this.difficulty]).replace('\0', '0');
-        System.out.println(String.format("Mining with difficulty: %s and targetHash: %s.", this.difficulty, targetHash));
-
         String minedHash = this.calculateHash();
-        while (!minedHash.substring(0, difficulty).equals(targetHash))
+        while (!minedHash.substring(0, 2).equals("00"))
         {
             this.nonce++;
-            // Check if the timestamp is still valid over 100,000 nonce-tries.
-            if (this.nonce % 100000 == 0)
-            {
-                if (this.timeStamp != new Date().getTime())
-                {
-                    this.timeStamp = new Date().getTime();
-                    this.nonce = 0;
-                }
-            }
             minedHash = this.calculateHash();
         }
-        System.out.println(String.format("Block is mined with hash %s!", minedHash));
+        System.out.println(String.format("New block is created with hash: %s.", minedHash));
         return minedHash;
     }
 
@@ -161,7 +143,6 @@ public class Block
     public String toString()
     {
         return "Block{" +
-                "\n\tdifficulty=" + difficulty +
                 "\n\thash='" + hash + '\'' +
                 "\n\tpreviousHash='" + previousHash + '\'' +
                 "\n\tdata='" + String.valueOf(data) + '\'' +
