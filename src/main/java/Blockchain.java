@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Blockchain which stores an array of {@link Block} objects.
+ */
 public class Blockchain extends ArrayList<Block>
 {
 

@@ -3,7 +3,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Block object.
+ * Block in which the data is stored.
  */
 public class Block
 {

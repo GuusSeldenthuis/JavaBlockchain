@@ -21,7 +21,10 @@ public class Utils
             for (int i = 0; i < hash.length; i++)
             {
                 String hex = Integer.toHexString(0xff & hash[i]);
-                if (hex.length() == 1) hexString.append('0');
+                if (hex.length() == 1)
+                {
+                    hexString.append('0');
+                }
                 hexString.append(hex);
             }
 
@@ -44,9 +47,9 @@ public class Utils
     }
 
     /**
-     * Method for genrating a random string of data at a given length.
+     * Method for gestating a random string of data at a given length.
      *
-     * @param len Lenght of the to-be-generated string.
+     * @param len Length of the to-be-generated string.
      */
     public static char[] randomString(int len)
     {
@@ -55,7 +58,9 @@ public class Utils
 
         char[] dataString = new char[len];
         for (int i = 0; i < len; i++)
+        {
             dataString[i] = AB.charAt(rnd.nextInt(AB.length()));
+        }
         return dataString;
     }
 
