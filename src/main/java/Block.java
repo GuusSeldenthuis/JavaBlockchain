@@ -91,7 +91,7 @@ public class Block
         return Utils.applySHA256d(
                 this.previousHash +
                         Long.toString(this.timeStamp) +
-                        Long.toString(nonce) +
+                        Long.toString(this.nonce) +
                         String.valueOf(this.data)
         );
     }
