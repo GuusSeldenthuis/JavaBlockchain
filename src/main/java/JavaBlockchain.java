@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Main
+public class JavaBlockchain
 {
 
     public static List<Block> blockchain = new ArrayList<>();
@@ -17,7 +17,7 @@ public class Main
 
         Random random = new Random();
 
-        // Generate 10 blocks with random (sized) data.
+        // Generate 10 blocks with random data.
         while (blockchain.size() < 10)
         {
             System.out.println("======");
@@ -28,8 +28,10 @@ public class Main
             prevBlockHash = block.getHash();
         }
 
+        System.out.println("== Printing out blockchain...");
         System.out.println(blockchain);
 
+        System.out.println("== Verifying blockchain...");
         verifyBlocks(blockchain);
 
     }
