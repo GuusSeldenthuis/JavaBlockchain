@@ -88,7 +88,7 @@ public class Block
      */
     public String calculateHash()
     {
-        return Utils.moveZerosToFront(Utils.applySHA256d(
+        return HashUtils.moveZerosToFront(HashUtils.applySHA256d(
                 this.previousHash +
                         Long.toString(this.timeStamp) +
                         Long.toString(this.nonce) +

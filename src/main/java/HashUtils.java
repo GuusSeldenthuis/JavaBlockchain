@@ -1,7 +1,6 @@
 import java.security.MessageDigest;
-import java.security.SecureRandom;
 
-public class Utils
+public class HashUtils
 {
     /**
      * Applies Sha256 to a string and returns the result.
@@ -43,24 +42,6 @@ public class Utils
     public static String applySHA256d(String input)
     {
         return applySHA256(applySHA256(input));
-    }
-
-    /**
-     * Method for gestating a random string of data at a given length.
-     *
-     * @param len Length of the to-be-generated string.
-     */
-    public static char[] randomString(int len)
-    {
-        String AB = " .!@#$%^&*()_+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        SecureRandom rnd = new SecureRandom();
-
-        char[] dataString = new char[len];
-        for (int i = 0; i < len; i++)
-        {
-            dataString[i] = AB.charAt(rnd.nextInt(AB.length()));
-        }
-        return dataString;
     }
 
     /**
