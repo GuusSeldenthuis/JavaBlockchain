@@ -16,7 +16,6 @@ public class Utils
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes("UTF-8"));
 
-            // ToDo: Check if moving 0's is needed/optimal for all hashing rounds.
             StringBuffer hexString = new StringBuffer();
             for (int i = 0; i < hash.length; i++)
             {
@@ -62,6 +61,24 @@ public class Utils
             dataString[i] = AB.charAt(rnd.nextInt(AB.length()));
         }
         return dataString;
+    }
+
+    /**
+     * Moves all zeros within the given string to the front.
+     *
+     * @param oldHash Old/original hash.
+     * @return Old hash with all zeros moved to the front.
+     */
+    public static String moveZerosToFront(String oldHash)
+    {
+        System.out.println(oldHash);
+
+        StringBuilder newHash = new StringBuilder();
+        for (int i = 0; i != 64; i++)
+        {
+            newHash.insert(oldHash.charAt(i) == '0' ? 0 : i, oldHash.charAt(i));
+        }
+        return newHash.toString();
     }
 
 

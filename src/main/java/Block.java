@@ -88,23 +88,23 @@ public class Block
      */
     public String calculateHash()
     {
-        return Utils.applySHA256d(
+        return Utils.moveZerosToFront(Utils.applySHA256d(
                 this.previousHash +
                         Long.toString(this.timeStamp) +
                         Long.toString(this.nonce) +
                         String.valueOf(this.data)
-        );
+        ));
     }
 
     /**
-     * Generate a block-hash starting with at least two zero.
+     * Generate a block-hash starting with at least four zero.
      *
      * @return A hash that's valid for the new block.
      */
     public String generateValidBlockHash()
     {
         String minedHash = this.calculateHash();
-        while (!minedHash.substring(0, 2).equals("00"))
+        while (!minedHash.substring(0, 4).equals("0000"))
         {
             this.nonce++;
             minedHash = this.calculateHash();
