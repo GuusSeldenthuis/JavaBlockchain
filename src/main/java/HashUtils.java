@@ -52,8 +52,6 @@ public class HashUtils
      */
     public static String moveZerosToFront(String oldHash)
     {
-        System.out.println(oldHash);
-
         StringBuilder newHash = new StringBuilder();
         for (int i = 0; i != 64; i++)
         {
@@ -61,6 +59,5 @@ public class HashUtils
         }
         return newHash.toString();
     }
-
 
 }

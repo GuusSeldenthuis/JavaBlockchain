@@ -97,14 +97,15 @@ public class Block
     }
 
     /**
-     * Generate a block-hash starting with at least four zero.
+     * Generate a block-hash starting with at least six zero.
      *
      * @return A hash that's valid for the new block.
      */
     public String generateValidBlockHash()
     {
         String minedHash = this.calculateHash();
-        while (!minedHash.substring(0, 4).equals("0000"))
+        // ToDo: Compare generate hash by value instead of leading '0' characters.
+        while (!minedHash.substring(0, 6).equals("000000"))
         {
             this.nonce++;
             minedHash = this.calculateHash();
