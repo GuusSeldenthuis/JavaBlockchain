@@ -24,7 +24,7 @@ public class Block
     private long nonce;
 
     /**
-     * The default constructor for creating a basic block.
+     * The default constructor for creating/mining a basic block.
      *
      * @param previousHash The previous block's hash.
      * @param data         The block's data.
@@ -39,6 +39,29 @@ public class Block
 
         // Calculating the hash should be the last part of the block's creation.
         this.hash = this.generateValidBlockHash();
+    }
+
+    /**
+     * Constructor for creating a new block object based on existing data,
+     * things like the hash and nonce are already calculated.
+     *
+     * @param hash         The block's hash.
+     * @param previousHash The previous block's hash.
+     * @param data         The block's data.
+     * @param timeStamp    The block's creation date/timestamp.
+     * @param nonce        The block's nonce, used for mining different hash with the same block-data.
+     */
+    public Block(String hash,
+                 String previousHash,
+                 char[] data,
+                 long timeStamp,
+                 long nonce)
+    {
+        this.hash = hash;
+        this.previousHash = previousHash;
+        this.data = data;
+        this.timeStamp = timeStamp;
+        this.nonce = nonce;
     }
 
     /**
@@ -88,12 +111,12 @@ public class Block
      */
     public String calculateHash()
     {
-        return HashUtils.moveZerosToFront(HashUtils.applySHA256d(
+        return HashUtils.applySHA256d(
                 this.previousHash +
                         Long.toString(this.timeStamp) +
                         Long.toString(this.nonce) +
                         String.valueOf(this.data)
-        ));
+        );
     }
 
     /**
@@ -104,8 +127,7 @@ public class Block
     public String generateValidBlockHash()
     {
         String minedHash = this.calculateHash();
-        // ToDo: Compare generate hash by value instead of leading '0' characters.
-        while (!minedHash.substring(0, 6).equals("000000"))
+        while (!minedHash.substring(0, 2).equals("00"))
         {
             this.nonce++;
             minedHash = this.calculateHash();
@@ -119,10 +141,22 @@ public class Block
      *
      * @return A plain-old {@link String} object containing the base64 encodes raw block-data.
      */
-    public String toDataBlock()
+    public String toBase64()
     {
-        String rawData = String.format("%s,%s,%s,%s", this.previousHash, this.timeStamp, this.nonce, String.valueOf(this.data));
+        String rawData = String.format("%s,%s,%s,%s,%s", this.hash, this.previousHash, this.timeStamp, this.nonce, String.valueOf(this.data));
         return new String(Base64.getEncoder().encode(rawData.getBytes()));
+    }
+
+    /**
+     * Decodes base64 into a {@link Block} object.
+     *
+     * @return An unverified {@link Block}.
+     */
+    static public Block fromBase64(String encodedBlockInput)
+    {
+        String rawBlock = new String(Base64.getDecoder().decode(encodedBlockInput.getBytes()));
+        String[] blockData = rawBlock.split(",", 5);
+        return new Block(blockData[0], blockData[1], blockData[4].toCharArray(), Long.valueOf(blockData[2]), Long.valueOf(blockData[3]));
     }
 
     @Override
