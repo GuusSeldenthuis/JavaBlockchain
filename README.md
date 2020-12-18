@@ -15,4 +15,4 @@ Improved version of the application written by [Kass on Medium.com](https://medi
 * Weight based on blocksize.
 
 ## Notes
- *This is this is work in progress and mainly used to become better in programming*
+ *This is a work in progress and only used to become better in programming in combination with cryptography.*
